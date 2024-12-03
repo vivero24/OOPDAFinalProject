@@ -7,7 +7,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Project7_Driver
+public class Final_Project_Driver
 {
    public static void main()
    {
