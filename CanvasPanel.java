@@ -24,7 +24,7 @@ public class CanvasPanel extends JPanel
     private final static int CANVAS_HEIGHT = 800;
     private List <Shape2D> shapesList;
     private int frameNumber;
-    
+    private boolean action; //simulate (on/off)
     
     public CanvasPanel()
     {
@@ -51,15 +51,7 @@ public class CanvasPanel extends JPanel
         shapesList.add(new Polygon2D(Shape2D.RED, 0, 0, tBlockXcoord, tBlockYcoord));
         shapesList.add(new Polygon2D(Shape2D.BLUE, 0, 0, sBlockXcoord, sBlockYcoord));
         BufferedImage[] Test_Sprite = new BufferedImage [1];
-        try
-        {
-            Test_Sprite[0] = ImageIO.read(new File("Tetris_T_1.png"));
-        }
-        catch(IOException ie)
-        {
-            ie.printStackTrace();            
-        }
-        shapesList.add(new Sprite2D( 200, 515, Test_Sprite));
+        
     
             
         
@@ -68,8 +60,7 @@ public class CanvasPanel extends JPanel
     
     public void Simulate()
     {
-        //circle1.Move(1, 2); // move the shape along via a delta in x and y
-        //circle2.Move(2, 1); // move the shape along via a delta in x and y
+        shapesList.get(0).Move(0,10);
         
         
     }
@@ -89,12 +80,13 @@ public class CanvasPanel extends JPanel
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(X_CORNER, Y_CORNER, CANVAS_WIDTH, CANVAS_HEIGHT); //make the canvas white
 
-    
+        
         
         for (Shape2D s: this.shapesList)
         {
             s.Draw(g);
         }
+        
     }
     
     public static int getCanvasWidth()
@@ -137,6 +129,9 @@ public class CanvasPanel extends JPanel
                 case KeyEvent.VK_RIGHT:
                     System.out.println("press right arrow");
                 break;
+                case KeyEvent.VK_SPACE:
+                    System.out.println("press space key");
+                    shapesList.get(0).Move(0,700);
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
@@ -146,4 +141,10 @@ public class CanvasPanel extends JPanel
             System.out.println("released");
         }
     }
+    
+    
+    
+    
+    
+
 }
