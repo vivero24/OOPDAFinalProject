@@ -41,17 +41,9 @@ public class Polygon2D extends Shape2D
     public void Draw(Graphics g)
     {
         Transform();
-        // Scale, Rotate, Translate
-        //if(getFillColor() != null)
-        //{
         g.setColor(super.getFillColor());
         g.fillPolygon(txCoords, tyCoords, xCoords.length);
-        //}
-        //if (GetOutline())
-        //{
-            //g.setColor(super.GetOutlineColor());
-            //g.drawPolygon(txCoords, tyCoords, xCoords.length);
-        //}
+        
     }
     
         

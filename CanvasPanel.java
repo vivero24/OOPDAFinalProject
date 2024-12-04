@@ -20,12 +20,8 @@ public class CanvasPanel extends JPanel
 {
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
-    //private final static int CANVAS_WIDTH = 400;
-    //private final static int CANVAS_HEIGHT = 400;
-    private final static int CANVAS_WIDTH = 600;
-    private final static int CANVAS_HEIGHT = 600;
-    
-    // private [] Shapes;   // ????????????????
+    private final static int CANVAS_WIDTH = 400;
+    private final static int CANVAS_HEIGHT = 800;
     private List <Shape2D> shapesList;
     private int frameNumber;
     
@@ -33,10 +29,7 @@ public class CanvasPanel extends JPanel
     public CanvasPanel()
     {
         // Create some shapes, they should be in a List
-       //circle1 = new Circle();  // Construct a circle with the default color
-                           //col x  y   dia
-        //circle2 = new Circle(7, 20, 20, 40); // Construct a circle with color index 7
-        
+              
         // Callback for keyboard events
         this.setFocusable(true);
         this.addKeyListener(new myActionListener());
@@ -49,36 +42,26 @@ public class CanvasPanel extends JPanel
         renderLoop.start();
         
         this.shapesList = new ArrayList<>();
-        // Mountain
-        int [] xCoords = {25, 150, 200, 300, 400, 500, 625};
-        int [] yCoords = {490, 390, 420, 350, 430, 300, 490};
-        shapesList.add(new Polygon2D(Shape2D.BROWN, 0, 0, xCoords ,yCoords)); // Mountain, shape 0
-        // Grass and road
-        shapesList.add(new Rectangle2D(Shape2D.GREEN, 25, 575, 600, 50)); // Green rectangle, shape 1
-        shapesList.add(new Rectangle2D(Shape2D.BLACK, 25, 525, 600, 50)); // Black rectangle, shape 2
-        shapesList.add(new Rectangle2D(Shape2D.WHITE, 25, 520, 600, 10)); // White rectangle, shape 3
-        shapesList.add(new Rectangle2D(Shape2D.BLACK, 25, 490, 600, 30)); // Black rectangle, shape 4
-        shapesList.add(new StarPoly2D(6, 200, 300)); // Star shape 5
-        //shapesList.add(new Circle2D()); // Circle shape 6
-        // color xpos ypos diamater
-        shapesList.add(new Circle2D(Shape2D.BLUE, 20, 20, 50)); // Circle shape 7
-        shapesList.add(new Rectangle2D(Shape2D.BLUE, 100, 470, 100, 50)); // A blue reactangle, shape 8
-        //shapesList.get(6).SetOutline(true);
-        //shapesList.get(6).SetOutlineColor(Shape2D.WHITE);
-        shapesList.add(new Oval2D(Shape2D.YELLOW, 400, 100, 40, 30)); // Yellow Oval shape 9
-        // Sonic Sprite
-        BufferedImage[] Sonic_Sprites = new BufferedImage[4];
-        try {
-            Sonic_Sprites[0] = ImageIO.read(new File("Sonic1.png"));
-            Sonic_Sprites[1] = ImageIO.read(new File("Sonic2.png"));
-            Sonic_Sprites[2] = ImageIO.read(new File("Sonic3.png"));
-            Sonic_Sprites[3] = ImageIO.read(new File("Sonic4.png"));
-        } catch (IOException ie) {
-            ie.printStackTrace();
-        }
-        shapesList.add(new Sprite2D(200, 515, Sonic_Sprites)); // shape 10
-             
+        int [] tBlockXcoord = {50,80,80,70,70,60,60,50};
+        int [] tBlockYcoord = {50,50,60,60,70,70,60,60};
         
+        int [] sBlockXcoord = {100,120,120,110,110,90,90,100};
+        int [] sBlockYcoord = {50, 50, 60, 60, 70, 70, 60, 60};
+          
+        shapesList.add(new Polygon2D(Shape2D.RED, 0, 0, tBlockXcoord, tBlockYcoord));
+        shapesList.add(new Polygon2D(Shape2D.BLUE, 0, 0, sBlockXcoord, sBlockYcoord));
+        BufferedImage[] Test_Sprite = new BufferedImage [1];
+        try
+        {
+            Test_Sprite[0] = ImageIO.read(new File("Tetris_T_1.png"));
+        }
+        catch(IOException ie)
+        {
+            ie.printStackTrace();            
+        }
+        shapesList.add(new Sprite2D( 200, 515, Test_Sprite));
+    
+            
         
        
     }
@@ -106,9 +89,7 @@ public class CanvasPanel extends JPanel
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(X_CORNER, Y_CORNER, CANVAS_WIDTH, CANVAS_HEIGHT); //make the canvas white
 
-        // Need to make draw polymorphic and in a List
-        //circle1.Draw(g);
-        //circle2.Draw(g);
+    
         
         for (Shape2D s: this.shapesList)
         {
@@ -135,6 +116,9 @@ public class CanvasPanel extends JPanel
     {
         return Y_CORNER;
     }
+    
+    
+    
     public class myActionListener extends KeyAdapter 
     {
         public void keyPressed(KeyEvent e)
