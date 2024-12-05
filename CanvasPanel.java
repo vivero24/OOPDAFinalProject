@@ -25,6 +25,9 @@ public class CanvasPanel extends JPanel
     private List <Shape2D> shapesList;
     private int frameNumber;
     private boolean action; //simulate (on/off)
+    private RandomInteger rng;
+    private Shape2D currentShape = null;
+    
     
     public CanvasPanel()
     {
@@ -40,8 +43,9 @@ public class CanvasPanel extends JPanel
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
         Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();}); // lambda expression for ActionListener implements actionPerformed
         renderLoop.start();
-        
         this.shapesList = new ArrayList<>();
+        
+        
         int [] tBlockXcoord = {50,80,80,70,70,60,60,50};
         int [] tBlockYcoord = {50,50,60,60,70,70,60,60};
         
@@ -60,11 +64,8 @@ public class CanvasPanel extends JPanel
         {
             ie.printStackTrace();
         }
-        shapesList.add(new Sprite2D(350,200,TetrisJBlock));
-        
-    
-            
-        
+        shapesList.add(new Sprite2D(350,200,TetrisJBlock)); 
+        this.rng = new RandomInteger(0,shapesList.size());
        
     }
     
@@ -74,12 +75,21 @@ public class CanvasPanel extends JPanel
         //while(collision = false)//condition will be false if top is reached
         //{
             //generate a random number, grab a shape from the list, then move it down
+            if(currentShape == null)
+            {
+                int randnum = rng.Compute();
+                currentShape = shapesList.get(randnum);
+            }
             
+            if(currentShape  != null)
+            {
+                currentShape.Move(0,5);
+            }
             //if(shape reaches certain y pos)
             //{
                 //make collision = true
             //}
-            
+                   
     }
         
 
@@ -140,16 +150,19 @@ public class CanvasPanel extends JPanel
                 break;
                 case KeyEvent.VK_DOWN:
                     System.out.println("press down arrow");
+                    currentShape.Move(0,10);
                 break;
                 case KeyEvent.VK_LEFT:
                     System.out.println("press left arrow");
+                    currentShape.Move(-10,0);
+                    
                 break;
                 case KeyEvent.VK_RIGHT:
                     System.out.println("press right arrow");
+                    currentShape.Move(10,0);
                 break;
                 case KeyEvent.VK_SPACE:
                     System.out.println("press space key");
-                    shapesList.get(0).Move(0,700);
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
