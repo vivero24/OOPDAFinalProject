@@ -18,7 +18,7 @@ public class CanvasFrame
      */
     public CanvasFrame()
     {
-        frame = new JFrame("OPPDA Spring 2024 CanvasFrame"); //make the JFrame, and set thw window bar title 
+        frame = new JFrame("OOPDA Spring 2024 CanvasFrame"); //make the JFrame, and set thw window bar title 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         canvas = new CanvasPanel();  // CanvasPanel extends a JPanel

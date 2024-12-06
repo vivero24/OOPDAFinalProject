@@ -38,5 +38,11 @@ public class Sprite2D extends Shape2D
         }
     }
     
+    @Override
+    public boolean reachedBottom(int borderY)
+    {
+        return true;
+    }
+    
     
 }

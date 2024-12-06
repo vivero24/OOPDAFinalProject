@@ -25,4 +25,10 @@ public class Rectangle2D extends Shape2D
         g.setColor(this.getFillColor());
         g.fillRect(this.getXPos(), this.getYPos(), this.width, this.height);
     }
+    
+    @Override
+    public boolean reachedBottom(int borderY)
+    {
+        return true;
+    }
 }

@@ -24,7 +24,6 @@ public class CanvasPanel extends JPanel
     private final static int CANVAS_HEIGHT = 700;
     private List <Shape2D> shapesList;
     private int frameNumber;
-    private boolean action; //simulate (on/off)
     private RandomInteger rng;
     private Shape2D currentShape = null;
     
@@ -54,7 +53,6 @@ public class CanvasPanel extends JPanel
           
         shapesList.add(new Polygon2D(Shape2D.RED, 0, 0, tBlockXcoord, tBlockYcoord));
         shapesList.add(new Polygon2D(Shape2D.BLUE, 0, 0, sBlockXcoord, sBlockYcoord));
-        
         BufferedImage[] TetrisJBlock = new BufferedImage[1];
         try
         {
@@ -71,9 +69,6 @@ public class CanvasPanel extends JPanel
     
     public void Simulate()
     {   
-        //create a while loop
-        //while(collision = false)//condition will be false if top is reached
-        //{
             //generate a random number, grab a shape from the list, then move it down
             if(currentShape == null)
             {
@@ -84,13 +79,14 @@ public class CanvasPanel extends JPanel
             if(currentShape  != null)
             {
                 currentShape.Move(0,5);
+                if(currentShape.reachedBottom(725) == true)
+                {
+                    currentShape = null;
+                }
             }
-            //if(shape reaches certain y pos)
-            //{
-                //make collision = true
-            //}
+            
                    
-    }
+        }
         
 
     // This method is called by renderloop
