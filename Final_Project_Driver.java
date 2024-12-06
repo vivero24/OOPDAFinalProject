@@ -11,14 +11,10 @@ public class Final_Project_Driver
 {
    public static void main()
    {
-       Ex1();
+       new CanvasFrame();
    }
    
    //This is a Test from Githubs VS code
 
-   public static void Ex1()
-   {
-       new CanvasFrame();  // construct the window, which will construct a frame (window), and a panel(canvas)
-       
-   }
+   
 }

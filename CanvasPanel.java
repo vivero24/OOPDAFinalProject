@@ -21,9 +21,11 @@ public class CanvasPanel extends JPanel
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
     private final static int CANVAS_WIDTH = 400;
-    private final static int CANVAS_HEIGHT = 800;
+    private final static int CANVAS_HEIGHT = 700;
     private List <Shape2D> shapesList;
     private int frameNumber;
+    private RandomInteger rng;
+    private Shape2D currentShape = null;
     
     
     public CanvasPanel()
@@ -40,8 +42,9 @@ public class CanvasPanel extends JPanel
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
         Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();}); // lambda expression for ActionListener implements actionPerformed
         renderLoop.start();
-        
         this.shapesList = new ArrayList<>();
+        
+        
         int [] tBlockXcoord = {50,80,80,70,70,60,60,50};
         int [] tBlockYcoord = {50,50,60,60,70,70,60,60};
         
@@ -50,29 +53,41 @@ public class CanvasPanel extends JPanel
           
         shapesList.add(new Polygon2D(Shape2D.RED, 0, 0, tBlockXcoord, tBlockYcoord));
         shapesList.add(new Polygon2D(Shape2D.BLUE, 0, 0, sBlockXcoord, sBlockYcoord));
-        BufferedImage[] Test_Sprite = new BufferedImage [1];
+        BufferedImage[] TetrisJBlock = new BufferedImage[1];
         try
         {
-            Test_Sprite[0] = ImageIO.read(new File("Tetris_T_1.png"));
+            TetrisJBlock[0] = ImageIO.read(new File("Tetris_J_1.png"));
         }
         catch(IOException ie)
         {
-            ie.printStackTrace();            
+            ie.printStackTrace();
         }
-        shapesList.add(new Sprite2D( 200, 515, Test_Sprite));
-    
-            
-        
+        shapesList.add(new Sprite2D(350,200,TetrisJBlock)); 
+        this.rng = new RandomInteger(0,shapesList.size());
        
     }
     
     public void Simulate()
-    {
-        //circle1.Move(1, 2); // move the shape along via a delta in x and y
-        //circle2.Move(2, 1); // move the shape along via a delta in x and y
+    {   
+            //generate a random number, grab a shape from the list, then move it down
+            if(currentShape == null)
+            {
+                int randnum = rng.Compute();
+                currentShape = shapesList.get(randnum);
+            }
+            
+            if(currentShape  != null)
+            {
+                currentShape.Move(0,5);
+                if(currentShape.reachedBottom(725) == true)
+                {
+                    currentShape = null;
+                }
+            }
+            
+                   
+        }
         
-        
-    }
 
     // This method is called by renderloop
     public void paintComponent(Graphics g)
@@ -89,12 +104,13 @@ public class CanvasPanel extends JPanel
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(X_CORNER, Y_CORNER, CANVAS_WIDTH, CANVAS_HEIGHT); //make the canvas white
 
-    
+        
         
         for (Shape2D s: this.shapesList)
         {
             s.Draw(g);
         }
+        
     }
     
     public static int getCanvasWidth()
@@ -130,13 +146,19 @@ public class CanvasPanel extends JPanel
                 break;
                 case KeyEvent.VK_DOWN:
                     System.out.println("press down arrow");
+                    currentShape.Move(0,10);
                 break;
                 case KeyEvent.VK_LEFT:
                     System.out.println("press left arrow");
+                    currentShape.Move(-10,0);
+                    
                 break;
                 case KeyEvent.VK_RIGHT:
                     System.out.println("press right arrow");
+                    currentShape.Move(10,0);
                 break;
+                case KeyEvent.VK_SPACE:
+                    System.out.println("press space key");
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
@@ -146,4 +168,10 @@ public class CanvasPanel extends JPanel
             System.out.println("released");
         }
     }
+    
+    
+    
+    
+    
+
 }

@@ -190,6 +190,8 @@ public abstract class Shape2D
     
     
     
+    public abstract boolean reachedBottom(int borderY);
+    
 
     
 }

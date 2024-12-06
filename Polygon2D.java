@@ -1,5 +1,5 @@
 import java.awt.Graphics;
-
+import java.util.Arrays;
 /**
  * Write a description of class Polygon2D here.
  *
@@ -64,6 +64,24 @@ public class Polygon2D extends Shape2D
             this.tyCoords[i] = (int)(((x * Math.sin(rads) + y * Math.cos(rads)) +
             super.getYPos() + 0.5));
         }
+    }
+    
+    @Override
+    public boolean reachedBottom(int borderY)
+    {
+        boolean reachedBottom;
+        int yMax = Arrays.stream(tyCoords).max().getAsInt();
+        
+        
+        if (yMax >= borderY)
+        {
+            reachedBottom = true;
+        }
+        else
+        {
+            reachedBottom = false;
+        }
+        return reachedBottom;
     }
 
 
