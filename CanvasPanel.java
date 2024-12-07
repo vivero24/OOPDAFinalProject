@@ -21,16 +21,28 @@ public class CanvasPanel extends JPanel
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
     private final static int CANVAS_WIDTH = 600;
-    private final static int CANVAS_HEIGHT = 700;
+    private final static int CANVAS_HEIGHT = 800;
+    private final static int GAME_WIDTH = 400;
+    private final static int GAME_HEIGHT = 800;
     private List <Shape2D> shapesList;
     private int frameNumber;
     private RandomInteger rng;
     private Shape2D currentShape = null;
+    
+    private int gridRows;
+    private int gridColumns;
+    private int gridBoxSize;
+
     private Thread musicThread;
     
     
-    public CanvasPanel()
+    public CanvasPanel(int columns)
     {
+
+        gridColumns = columns;
+        gridBoxSize = GAME_WIDTH / gridColumns;
+        gridRows = GAME_HEIGHT / gridBoxSize;
+
         // Create some shapes, they should be in a List
               
         // Callback for keyboard events
@@ -97,6 +109,14 @@ public class CanvasPanel extends JPanel
         Graphics2D g2 = (Graphics2D)g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
+        for (int y = 0; y < gridRows; y++)
+        {
+            for (int x = 0; x < gridColumns; x++)
+            {
+              g.Rectangle2D(x + gridBoxSize, y * gridBoxSize, gridBoxSize, gridBoxSize)  
+            }
+        }
+
         // Set window background to black
         g.setColor(Color.BLACK);
         g.fillRect(0,0,CANVAS_WIDTH + 2 * X_CORNER, CANVAS_HEIGHT + 2 * Y_CORNER); //draw the black border
