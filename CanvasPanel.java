@@ -20,7 +20,7 @@ public class CanvasPanel extends JPanel
 {
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
-    private final static int CANVAS_WIDTH = 400;
+    private final static int CANVAS_WIDTH = 600;
     private final static int CANVAS_HEIGHT = 700;
     private List <Shape2D> shapesList;
     private int frameNumber;
