@@ -26,6 +26,7 @@ public class CanvasPanel extends JPanel
     private int frameNumber;
     private RandomInteger rng;
     private Shape2D currentShape = null;
+    private Thread musicThread;
     
     
     public CanvasPanel()
@@ -112,6 +113,22 @@ public class CanvasPanel extends JPanel
         }
         
     }
+    
+    public void playMusic()
+{
+audioPlayer musicPlayer = new audioPlayer("TetrisTheme.wav");
+//audioPlayer musicPlayer = new audioPlayer("accoustic-guitar.wav");
+musicThread = new Thread(musicPlayer);
+musicThread.start();
+}
+public void stopMusic()
+{
+if (musicThread != null)
+{
+musicThread.interrupt();
+musicThread = null;
+}
+}
     
     public static int getCanvasWidth()
     {
