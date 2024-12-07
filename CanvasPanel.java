@@ -113,7 +113,7 @@ public class CanvasPanel extends JPanel
         {
             for (int x = 0; x < gridColumns; x++)
             {
-              g.Rectangle2D(x + gridBoxSize, y * gridBoxSize, gridBoxSize, gridBoxSize)  
+              g.Rectangle2D(BLACK, x + gridBoxSize, y * gridBoxSize, gridBoxSize, gridBoxSize)  
             }
         }
 
