@@ -29,7 +29,7 @@ public class Rectangle2D extends Shape2D
     @Override
     public boolean reachedBottom()
     {
-        return super.getYPos() + height == 725;
+        return super.getYPos() + height >= 725;
     }
     
     @Override

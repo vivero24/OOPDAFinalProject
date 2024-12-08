@@ -214,15 +214,15 @@ public class CanvasPanel extends JPanel
             {
                 case KeyEvent.VK_S:
                     System.out.println("pressed 's' key ");
-                    currentShape.Move(0,10);
+                    currentShape.Move(0,25);
                     break;
                 case KeyEvent.VK_A:
                     System.out.println("pressed 'a' key");
-                    currentShape.Move(-10,0);
+                    currentShape.Move(-25,0);
                     break;
                 case KeyEvent.VK_D:
                     System.out.println("pressed 'd' key");
-                    currentShape.Move(10,0);
+                    currentShape.Move(25,0);
                     break;
                 case KeyEvent.VK_Q:
                     System.out.println("pressed 'q' key");

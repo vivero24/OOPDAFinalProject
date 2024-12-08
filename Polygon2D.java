@@ -70,7 +70,7 @@ public class Polygon2D extends Shape2D
     public boolean reachedBottom()
     {
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
-        return yMax == 725;
+        return yMax >= 725;
     }
     
     @Override
