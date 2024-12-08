@@ -155,7 +155,7 @@ public abstract class Shape2D
         return rotAngleZ;
     }
     
-    public void setZRotate()
+    public void setZRotate(double rotAngleZ)
     {
         this.rotAngleZ = rotAngleZ;
     }

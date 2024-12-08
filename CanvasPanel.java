@@ -34,7 +34,7 @@ public class CanvasPanel extends JPanel
     private RandomInteger shapeRng;
     private RandomInteger colorRng;
     private Shape2D currentShape = null;
-    
+    private double negativeShapeAngle = 0.0;
     private int gridRows;
     private int gridColumns;
     private int gridBoxSize;
@@ -175,7 +175,7 @@ public class CanvasPanel extends JPanel
         musicThread.start();
     }
     
-        public void stopMusic()
+    public void stopMusic()
     {
         if (musicThread != null)
         {
@@ -212,24 +212,26 @@ public class CanvasPanel extends JPanel
         {
             switch (e.getKeyCode())
             {
-                case KeyEvent.VK_UP:
-                    System.out.println("press up arrow");
-                break;
-                case KeyEvent.VK_DOWN:
-                    System.out.println("press down arrow");
+                case KeyEvent.VK_S:
+                    System.out.println("pressed 's' key ");
                     currentShape.Move(0,10);
-                break;
-                case KeyEvent.VK_LEFT:
-                    System.out.println("press left arrow");
+                    break;
+                case KeyEvent.VK_A:
+                    System.out.println("pressed 'a' key");
                     currentShape.Move(-10,0);
-                    
-                break;
-                case KeyEvent.VK_RIGHT:
-                    System.out.println("press right arrow");
+                    break;
+                case KeyEvent.VK_D:
+                    System.out.println("pressed 'd' key");
                     currentShape.Move(10,0);
-                break;
+                    break;
+                case KeyEvent.VK_Q:
+                    System.out.println("pressed 'q' key");
+                    negativeShapeAngle -= 90.0;
+                    currentShape.setZRotate(negativeShapeAngle);
+                    break;
                 case KeyEvent.VK_SPACE:
                     System.out.println("press space key");
+                    break;
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
