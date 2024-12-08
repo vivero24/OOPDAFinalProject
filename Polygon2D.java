@@ -67,23 +67,18 @@ public class Polygon2D extends Shape2D
     }
     
     @Override
-    public boolean reachedBottom(int borderY)
+    public boolean reachedBottom()
     {
-        boolean reachedBottom;
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
         
-        
-        if (yMax >= borderY)
-        {
-            reachedBottom = true;
-        }
-        else
-        {
-            reachedBottom = false;
-        }
-        return reachedBottom;
+        return yMax == 725;
     }
-
+    
+    @Override
+    public Shape2D clone()
+    {
+        return new Polygon2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.xCoords.clone(), this.yCoords.clone());
+    }
 
     
 

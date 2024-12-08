@@ -20,13 +20,19 @@ public class CanvasPanel extends JPanel
 {
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
+    
     private final static int CANVAS_WIDTH = 600;
     private final static int CANVAS_HEIGHT = 800;
+    
     private final static int GAME_WIDTH = 400;
     private final static int GAME_HEIGHT = 800;
+    
     private List <Shape2D> shapesList;
+    private List <Shape2D> processedShapes;
+    
     private int frameNumber;
-    private RandomInteger rng;
+    private RandomInteger shapeRng;
+    private RandomInteger colorRng;
     private Shape2D currentShape = null;
     
     private int gridRows;
@@ -36,12 +42,12 @@ public class CanvasPanel extends JPanel
     private Thread musicThread;
     
     
-    public CanvasPanel(int columns)
+    public CanvasPanel()
     {
 
-        gridColumns = columns;
-        gridBoxSize = GAME_WIDTH / gridColumns;
-        gridRows = GAME_HEIGHT / gridBoxSize;
+        //gridColumns = columns;
+        //gridBoxSize = GAME_WIDTH / gridColumns;
+        //gridRows = GAME_HEIGHT / gridBoxSize;
 
         // Create some shapes, they should be in a List
               
@@ -55,29 +61,45 @@ public class CanvasPanel extends JPanel
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
         Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();}); // lambda expression for ActionListener implements actionPerformed
         renderLoop.start();
+        
         this.shapesList = new ArrayList<>();
+        this.processedShapes = new ArrayList<>();
         
+        //adding necessary shapes 
+        //t block coords
+        int [] tblockXcoords = {75, 150, 150, 125, 125, 100, 100, 75};
+        int [] tblockYcoords = {-50, -50, -25, -25,0, 0, -25, -25};
+        shapesList.add(new Polygon2D(Shape2D.BLACK, 0, 0, tblockXcoords, tblockYcoords));
         
-        int [] tBlockXcoord = {50,80,80,70,70,60,60,50};
-        int [] tBlockYcoord = {50,50,60,60,70,70,60,60};
+        //s block coords
+        int [] sblockXcoords = {100, 150, 150, 125, 125, 75, 75, 100};
+        int [] sblockYcoords = {-50, -50, -25, -25, 0, 0, -25, -25};
+        shapesList.add(new Polygon2D(Shape2D.BLACK, 0, 0, sblockXcoords, sblockYcoords));
         
-        int [] sBlockXcoord = {100,120,120,110,110,90,90,100};
-        int [] sBlockYcoord = {50, 50, 60, 60, 70, 70, 60, 60};
+        //z block coords
+        int [] zblockXcoords = {50,100, 100, 125, 125, 75, 75, 50};
+        int [] zblockYcoords = {-50, -50, -25, -25, 0, 0, -25, -25};
+        shapesList.add(new Polygon2D(Shape2D.BLACK, 0, 0, zblockXcoords, zblockYcoords));
+        
+        //L block coords
+        int [] LblockXcoords = {75, 100, 100, 125, 125, 75};
+        int [] LblockYcoords = {-75, -75, -25, -25, 0, 0};
+        
+        //j block coords
+        int [] jblockXcoords = {100, 125, 125, 75, 75, 100};
+        int [] jblockYcoords = {-75, -75, 0, 0, -25, -25};
+        
+        //adding o block
+        shapesList.add(new Rectangle2D(Shape2D.BLACK, 200, -50, 50, 50));
+        
+        //adding I block
+        shapesList.add(new Rectangle2D(Shape2D.BLACK, 200, -100, 25, 100));
+        
           
-        shapesList.add(new Polygon2D(Shape2D.RED, 0, 0, tBlockXcoord, tBlockYcoord));
-        shapesList.add(new Polygon2D(Shape2D.BLUE, 0, 0, sBlockXcoord, sBlockYcoord));
-        BufferedImage[] TetrisJBlock = new BufferedImage[1];
-        try
-        {
-            TetrisJBlock[0] = ImageIO.read(new File("Tetris_J_1.png"));
-        }
-        catch(IOException ie)
-        {
-            ie.printStackTrace();
-        }
-        shapesList.add(new Sprite2D(350,200,TetrisJBlock)); 
-        this.rng = new RandomInteger(0,shapesList.size());
-       
+        
+        this.shapeRng = new RandomInteger(0,shapesList.size());
+        this.colorRng = new RandomInteger(0, Shape2D.COLORS.length);
+        
     }
     
     public void Simulate()
@@ -85,19 +107,28 @@ public class CanvasPanel extends JPanel
             //generate a random number, grab a shape from the list, then move it down
             if(currentShape == null)
             {
-                int randnum = rng.Compute();
-                currentShape = shapesList.get(randnum);
-            }
+                int shapeRandNum = shapeRng.Compute();
+                currentShape = shapesList.get(shapeRandNum);
+                int colorRandNum = colorRng.Compute();
+                currentShape.setfillColor(colorRandNum);
             
-            if(currentShape  != null)
+            }   
+        
+            
+            if(currentShape.reachedBottom() == false)
             {
                 currentShape.Move(0,5);
-                if(currentShape.reachedBottom(725) == true)
-                {
-                    currentShape = null;
-                }
             }
-            
+            else
+            {
+                processedShapes.add(currentShape);
+                int randnum = shapeRng.Compute();
+                currentShape = shapesList.get(randnum).clone();
+                int colorRandNum = colorRng.Compute();
+                currentShape.setfillColor(colorRandNum);
+                
+            }
+                
                    
         }
         
@@ -109,13 +140,7 @@ public class CanvasPanel extends JPanel
         Graphics2D g2 = (Graphics2D)g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        for (int y = 0; y < gridRows; y++)
-        {
-            for (int x = 0; x < gridColumns; x++)
-            {
-              g.Rectangle2D(BLACK, x + gridBoxSize, y * gridBoxSize, gridBoxSize, gridBoxSize)  
-            }
-        }
+        
 
         // Set window background to black
         g.setColor(Color.BLACK);
@@ -127,28 +152,36 @@ public class CanvasPanel extends JPanel
 
         
         
-        for (Shape2D s: this.shapesList)
+        for (Shape2D s: this.processedShapes)
         {
             s.Draw(g);
         }
         
+        if(currentShape != null)
+        {
+            currentShape.Draw(g);
+        }
+        
+        
+        
     }
     
     public void playMusic()
-{
-audioPlayer musicPlayer = new audioPlayer("TetrisTheme.wav");
-//audioPlayer musicPlayer = new audioPlayer("accoustic-guitar.wav");
-musicThread = new Thread(musicPlayer);
-musicThread.start();
-}
-public void stopMusic()
-{
-if (musicThread != null)
-{
-musicThread.interrupt();
-musicThread = null;
-}
-}
+    {
+        audioPlayer musicPlayer = new audioPlayer("TetrisTheme.wav");
+        //audioPlayer musicPlayer = new audioPlayer("accoustic-guitar.wav");
+        musicThread = new Thread(musicPlayer);
+        musicThread.start();
+    }
+    
+        public void stopMusic()
+    {
+        if (musicThread != null)
+        {
+            musicThread.interrupt();
+            musicThread = null;
+        }
+    }
     
     public static int getCanvasWidth()
     {

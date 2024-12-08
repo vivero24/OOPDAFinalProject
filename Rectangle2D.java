@@ -27,8 +27,14 @@ public class Rectangle2D extends Shape2D
     }
     
     @Override
-    public boolean reachedBottom(int borderY)
+    public boolean reachedBottom()
     {
-        return true;
+        return super.getYPos() + height == 725;
+    }
+    
+    @Override
+    public Shape2D clone()
+    {
+        return new Rectangle2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.width, this.height);
     }
 }

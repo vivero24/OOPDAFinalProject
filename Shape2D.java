@@ -109,6 +109,16 @@ public abstract class Shape2D
         return yPos;
     }
 
+    public int getFillColorIndex()
+    {
+        return fillColorIndex;
+    }
+    
+    public void setfillColor(int fillColorIndex )
+    {
+        this.fillColor = COLORS[fillColorIndex];
+    }
+    
     
     public Color getFillColor()
     {
@@ -116,10 +126,7 @@ public abstract class Shape2D
     }
     
     
-    public void setColor(Color color)
-    {
-        this.fillColor = color;
-    }
+    
     //getters and setters for sX,sY
     
     public double getScaleX()
@@ -190,7 +197,9 @@ public abstract class Shape2D
     
     
     
-    public abstract boolean reachedBottom(int borderY);
+    public abstract boolean reachedBottom();
+    
+    public abstract Shape2D clone();
     
 
     
