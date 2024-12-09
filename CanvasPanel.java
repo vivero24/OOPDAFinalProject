@@ -131,17 +131,20 @@ public class CanvasPanel extends JPanel
             }
         
             
-            if(currentBlock.reachedBottom() == false) //checking if shape reaches bottom
+            if(currentBlock.reachedBottom()) //checking if shape reaches bottom
             {
-                currentBlock.Move(0,5);
-            }
-            else
-            {
+                currentBlock.Move(0,725 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
                 processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
                 int randnum = blockRng.Compute(); 
                 currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
                 int colorRandNum = colorRng.Compute(); //generate a random color
                 currentBlock.setfillColor(colorRandNum);
+                
+            }
+            else
+            {
+                currentBlock.Move(0,5);
+                
                 
             }
                 
