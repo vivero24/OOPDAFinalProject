@@ -34,7 +34,10 @@ public class CanvasPanel extends JPanel
     private RandomInteger shapeRng;
     private RandomInteger colorRng;
     private Shape2D currentShape = null;
-    private double negativeShapeAngle = 0.0;
+    private double negativeShapeAngle;
+    private double positiveShapeAngle;
+    
+    
     private int gridRows;
     private int gridColumns;
     private int gridBoxSize;
@@ -65,6 +68,8 @@ public class CanvasPanel extends JPanel
         
         this.shapesList = new ArrayList<>();
         this.processedShapes = new ArrayList<>();
+        this.negativeShapeAngle = 0.0;
+        this.positiveShapeAngle = 0.0;
         
         //adding necessary shapes 
         //t block coords
@@ -170,7 +175,6 @@ public class CanvasPanel extends JPanel
     public void playMusic()
     {
         audioPlayer musicPlayer = new audioPlayer("TetrisTheme.wav");
-        //audioPlayer musicPlayer = new audioPlayer("accoustic-guitar.wav");
         musicThread = new Thread(musicPlayer);
         musicThread.start();
     }
@@ -227,8 +231,15 @@ public class CanvasPanel extends JPanel
                 case KeyEvent.VK_Q:
                     System.out.println("pressed 'q' key");
                     negativeShapeAngle -= 90.0;
+                    negativeShapeAngle = (negativeShapeAngle - 360) % 360;
                     currentShape.setZRotate(negativeShapeAngle);
                     break;
+                case KeyEvent.VK_E:
+                    System.out.println("pressed 'e' key");
+                    positiveShapeAngle += 90.0;
+                    positiveShapeAngle = (positiveShapeAngle + 360) % 360;
+                    currentShape.setZRotate(positiveShapeAngle);
+                    break;                    
                 case KeyEvent.VK_SPACE:
                     System.out.println("press space key");
                     break;
