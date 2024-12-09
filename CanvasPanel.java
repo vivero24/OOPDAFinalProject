@@ -23,8 +23,8 @@ public class CanvasPanel extends JPanel
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
     
-    private final static int CANVAS_WIDTH = 600;
-    private final static int CANVAS_HEIGHT = 800;
+    private final static int CANVAS_WIDTH = 250;
+    private final static int CANVAS_HEIGHT = 600;
     
     private final static int GAME_WIDTH = 400;
     private final static int GAME_HEIGHT = 800;
@@ -99,6 +99,15 @@ public class CanvasPanel extends JPanel
         int [] jblockYcoords = {-75, -75, 0, 0, -25, -25};
         blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, jblockXcoords, jblockYcoords));
         
+        //o block coords
+        int [] oblockXcoords = {75, 125, 125, 75};
+        int [] oblockYcoords = {-50, -50, 0, 0};
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, oblockXcoords, oblockYcoords));
+        
+        //i block coords
+        int [] iblockXcoords = {100, 125, 125, 100};
+        int [] iblockYcoords = {-100, -100, 0, 0};
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, iblockXcoords, iblockYcoords));
         
         
           
@@ -122,7 +131,7 @@ public class CanvasPanel extends JPanel
             
             if(currentBlock.reachedRight())
             {
-                currentBlock.Move(425 - Arrays.stream(currentBlock.gettXcoords()).max().getAsInt(), 0);
+                currentBlock.Move(275 - Arrays.stream(currentBlock.gettXcoords()).max().getAsInt(), 0);
             }
             
             if(currentBlock.reachedLeft())
@@ -133,7 +142,7 @@ public class CanvasPanel extends JPanel
             
             if(currentBlock.reachedBottom()) //checking if shape reaches bottom
             {
-                currentBlock.Move(0,725 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
+                currentBlock.Move(0,625 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
                 processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
                 int randnum = blockRng.Compute(); 
                 currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance

@@ -116,22 +116,22 @@ public class Polygon2D extends Shape2D
             double x = Sx * (xCoords[i] - centroidX);
             double y = Sy * (yCoords[i] - centroidY);
             
-            this.txCoords[i] = (int)(((x * Math.cos(rads) - y * Math.sin(rads)) + centroidX + super.getXPos() + 0.5));
-            this.tyCoords[i] = (int)(((x * Math.sin(rads) + y * Math.cos(rads)) + centroidY + super.getYPos() + 0.5));
+            this.txCoords[i] = (int)Math.round((x * Math.cos(rads) - y * Math.sin(rads)) + centroidX + super.getXPos());
+            this.tyCoords[i] = (int)Math.round((x * Math.sin(rads) + y * Math.cos(rads)) + centroidY + super.getYPos());
         }
     }
     
     public boolean reachedBottom()
     {
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
-        return yMax >= 725;
+        return yMax >= 625;
     }
     
     public boolean reachedRight()
     {
         boolean reachedRight;
         int xMax = Arrays.stream(txCoords).max().getAsInt();
-        if(xMax >= 425)
+        if(xMax >= 275)
         {
             reachedRight = true;
         }
@@ -157,7 +157,7 @@ public class Polygon2D extends Shape2D
         return reachedLeft;
     }
     
-    @Override
+    
     public Polygon2D clone()
     {
         return new Polygon2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.xCoords.clone(), this.yCoords.clone());
