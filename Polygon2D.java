@@ -55,14 +55,27 @@ public class Polygon2D extends Shape2D
         double rads = Math.toRadians(degs);
         double Sx = super.getScaleX();
         double Sy = super.getScaleY();
+        
+        //adjusting transform to rotate polygon about its center.
+        int sumX = 0;
+        int sumY = 0;
+        
+        for (int i = 0; i < xCoords.length ; i++) //calculating sum of coords in x and y coords
+        {
+            sumX += xCoords[i];
+            sumY += yCoords[i];
+        }
+        double centroidX = sumX / (double)xCoords.length; //finding average of each array which finds centroid
+        double centroidY = sumY / (double)xCoords.length;
+        
+        
         for (int i = 0; i < xCoords.length; i++)
         {
-            double x = Sx * this.xCoords[i];
-            double y = Sy * this.yCoords[i];
-            this.txCoords[i] = (int)(((x * Math.cos(rads) - y * Math.sin(rads)) +
-            super.getXPos()) + 0.5);
-            this.tyCoords[i] = (int)(((x * Math.sin(rads) + y * Math.cos(rads)) +
-            super.getYPos() + 0.5));
+            double x = Sx * (xCoords[i] - centroidX);
+            double y = Sy * (yCoords[i] - centroidY);
+            
+            this.txCoords[i] = (int)(((x * Math.cos(rads) - y * Math.sin(rads)) + centroidX + super.getXPos() + 0.5));
+            this.tyCoords[i] = (int)(((x * Math.sin(rads) + y * Math.cos(rads)) + centroidY + super.getYPos() + 0.5));
         }
     }
     
