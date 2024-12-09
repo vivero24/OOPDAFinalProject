@@ -197,9 +197,7 @@ public abstract class Shape2D
     
     
     
-    public abstract boolean reachedBottom();
     
-    public abstract Shape2D clone();
     
 
     

@@ -26,17 +26,7 @@ public class Rectangle2D extends Shape2D
         g.fillRect(this.getXPos(), this.getYPos(), this.width, this.height);
     }
     
-    @Override
-    public boolean reachedBottom()
-    {
-        return super.getYPos() + height >= 725;
-    }
     
-    @Override
-    public Shape2D clone()
-    {
-        return new Rectangle2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.width, this.height);
-    }
     
     
 }

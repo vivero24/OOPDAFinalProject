@@ -8,6 +8,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
@@ -15,6 +16,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+
 
 public class CanvasPanel extends JPanel
 {
@@ -27,15 +29,15 @@ public class CanvasPanel extends JPanel
     private final static int GAME_WIDTH = 400;
     private final static int GAME_HEIGHT = 800;
     
-    private List <Shape2D> shapesList;
-    private List <Shape2D> processedShapes;
+    private List <Polygon2D> blocksList;
+    private List <Polygon2D> processedBlocks;
     
     private int frameNumber;
-    private RandomInteger shapeRng;
+    private RandomInteger blockRng;
     private RandomInteger colorRng;
-    private Shape2D currentShape = null;
-    private double negativeShapeAngle;
-    private double positiveShapeAngle;
+    private Polygon2D currentBlock = null;
+    private double negativeAngle;
+    private double positiveAngle;
     
     
     private int gridRows;
@@ -66,44 +68,42 @@ public class CanvasPanel extends JPanel
         Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();}); // lambda expression for ActionListener implements actionPerformed
         renderLoop.start();
         
-        this.shapesList = new ArrayList<>();
-        this.processedShapes = new ArrayList<>();
-        this.negativeShapeAngle = 0.0;
-        this.positiveShapeAngle = 0.0;
+        this.blocksList = new ArrayList<>();
+        this.processedBlocks = new ArrayList<>();
+        this.negativeAngle = 0.0;
+        this.positiveAngle = 0.0;
         
         //adding necessary shapes 
         //t block coords
         int [] tblockXcoords = {75, 150, 150, 125, 125, 100, 100, 75};
         int [] tblockYcoords = {-50, -50, -25, -25,0, 0, -25, -25};
-        shapesList.add(new Polygon2D(Shape2D.BLACK, 0, 0, tblockXcoords, tblockYcoords));
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, tblockXcoords, tblockYcoords));
         
         //s block coords
         int [] sblockXcoords = {100, 150, 150, 125, 125, 75, 75, 100};
         int [] sblockYcoords = {-50, -50, -25, -25, 0, 0, -25, -25};
-        shapesList.add(new Polygon2D(Shape2D.BLACK, 0, 0, sblockXcoords, sblockYcoords));
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, sblockXcoords, sblockYcoords));
         
         //z block coords
         int [] zblockXcoords = {50,100, 100, 125, 125, 75, 75, 50};
         int [] zblockYcoords = {-50, -50, -25, -25, 0, 0, -25, -25};
-        shapesList.add(new Polygon2D(Shape2D.BLACK, 0, 0, zblockXcoords, zblockYcoords));
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, zblockXcoords, zblockYcoords));
         
         //L block coords
         int [] LblockXcoords = {75, 100, 100, 125, 125, 75};
         int [] LblockYcoords = {-75, -75, -25, -25, 0, 0};
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, LblockXcoords, LblockYcoords));
         
         //j block coords
         int [] jblockXcoords = {100, 125, 125, 75, 75, 100};
         int [] jblockYcoords = {-75, -75, 0, 0, -25, -25};
+        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, jblockXcoords, jblockYcoords));
         
-        //adding o block
-        shapesList.add(new Rectangle2D(Shape2D.BLACK, 200, -50, 50, 50));
         
-        //adding I block
-        shapesList.add(new Rectangle2D(Shape2D.BLACK, 200, -100, 25, 100));
         
           
         
-        this.shapeRng = new RandomInteger(0,shapesList.size());
+        this.blockRng = new RandomInteger(0,blocksList.size());
         this.colorRng = new RandomInteger(0, Shape2D.COLORS.length);
         
     }
@@ -111,27 +111,37 @@ public class CanvasPanel extends JPanel
     public void Simulate()
     {   
             //generate a random number, grab a shape from the list, then move it down
-            if(currentShape == null)
+            if(currentBlock == null)
             {
-                int shapeRandNum = shapeRng.Compute();
-                currentShape = shapesList.get(shapeRandNum);
+                int blockRandNum = blockRng.Compute();
+                currentBlock = blocksList.get(blockRandNum);
                 int colorRandNum = colorRng.Compute();
-                currentShape.setfillColor(colorRandNum);
+                currentBlock.setfillColor(colorRandNum);
             
-            }   
+            } 
+            
+            if(currentBlock.reachedRight())
+            {
+                currentBlock.Move(425 - Arrays.stream(currentBlock.gettXcoords()).max().getAsInt(), 0);
+            }
+            
+            if(currentBlock.reachedLeft())
+            {
+                currentBlock.Move(25 - Arrays.stream(currentBlock.gettXcoords()).min().getAsInt() , 0);
+            }
         
             
-            if(currentShape.reachedBottom() == false)
+            if(currentBlock.reachedBottom() == false) //checking if shape reaches bottom
             {
-                currentShape.Move(0,5);
+                currentBlock.Move(0,5);
             }
             else
             {
-                processedShapes.add(currentShape);
-                int randnum = shapeRng.Compute();
-                currentShape = shapesList.get(randnum).clone();
-                int colorRandNum = colorRng.Compute();
-                currentShape.setfillColor(colorRandNum);
+                processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
+                int randnum = blockRng.Compute(); 
+                currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
+                int colorRandNum = colorRng.Compute(); //generate a random color
+                currentBlock.setfillColor(colorRandNum);
                 
             }
                 
@@ -158,14 +168,14 @@ public class CanvasPanel extends JPanel
 
         
         
-        for (Shape2D s: this.processedShapes)
+        for (Polygon2D p: this.processedBlocks)
         {
-            s.Draw(g);
+            p.Draw(g);
         }
         
-        if(currentShape != null)
+        if(currentBlock != null)
         {
-            currentShape.Draw(g);
+            currentBlock.Draw(g);
         }
         
         
@@ -218,27 +228,27 @@ public class CanvasPanel extends JPanel
             {
                 case KeyEvent.VK_S:
                     System.out.println("pressed 's' key ");
-                    currentShape.Move(0,25);
+                    currentBlock.Move(0,25);
                     break;
                 case KeyEvent.VK_A:
                     System.out.println("pressed 'a' key");
-                    currentShape.Move(-25,0);
+                    currentBlock.Move(-25,0);
                     break;
                 case KeyEvent.VK_D:
                     System.out.println("pressed 'd' key");
-                    currentShape.Move(25,0);
+                    currentBlock.Move(25,0);
                     break;
                 case KeyEvent.VK_Q:
                     System.out.println("pressed 'q' key");
-                    negativeShapeAngle -= 90.0;
-                    negativeShapeAngle = (negativeShapeAngle - 360) % 360;
-                    currentShape.setZRotate(negativeShapeAngle);
+                    negativeAngle -= 90.0;
+                    negativeAngle = (negativeAngle - 360) % 360;
+                    currentBlock.setZRotate(negativeAngle);
                     break;
                 case KeyEvent.VK_E:
                     System.out.println("pressed 'e' key");
-                    positiveShapeAngle += 90.0;
-                    positiveShapeAngle = (positiveShapeAngle + 360) % 360;
-                    currentShape.setZRotate(positiveShapeAngle);
+                    positiveAngle += 90.0;
+                    positiveAngle = (positiveAngle + 360) % 360;
+                    currentBlock.setZRotate(positiveAngle);
                     break;                    
                 case KeyEvent.VK_SPACE:
                     System.out.println("press space key");

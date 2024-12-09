@@ -37,6 +37,48 @@ public class Polygon2D extends Shape2D
         }
     }
     
+    public int[] getXcoords()
+    {
+        return xCoords;
+    }
+    
+    public void setXcoords(int [] xCoords)
+    {
+        this.xCoords = xCoords;
+    }
+    
+    public int[] getYcoords()
+    {
+        return yCoords;
+    }
+    
+    public void setYcoords(int [] yCoords)
+    {
+        this.yCoords = yCoords;        
+    }
+    
+    
+    public int[] gettXcoords()
+    {
+        return txCoords;
+    }
+    
+    public void settXcoords(int [] txCoords)
+    {
+        this.txCoords = txCoords;
+    }
+    
+    public int[] gettYcoords()
+    {
+        return tyCoords;
+    }
+    
+    public void settYcoords(int [] tyCoords)
+    {
+        this.tyCoords = tyCoords;        
+    }    
+    
+    
     @Override
     public void Draw(Graphics g)
     {
@@ -79,15 +121,44 @@ public class Polygon2D extends Shape2D
         }
     }
     
-    @Override
     public boolean reachedBottom()
     {
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
         return yMax >= 725;
     }
     
+    public boolean reachedRight()
+    {
+        boolean reachedRight;
+        int xMax = Arrays.stream(txCoords).max().getAsInt();
+        if(xMax >= 425)
+        {
+            reachedRight = true;
+        }
+        else
+        {
+            reachedRight = false;
+        }
+        return reachedRight;
+    }
+    
+    public boolean reachedLeft()
+    {
+        boolean reachedLeft;
+        int xMin = Arrays.stream(txCoords).min().getAsInt();
+        if(xMin <= 25)
+        {
+            reachedLeft = true;
+        }
+        else
+        {
+            reachedLeft = false;
+        }
+        return reachedLeft;
+    }
+    
     @Override
-    public Shape2D clone()
+    public Polygon2D clone()
     {
         return new Polygon2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.xCoords.clone(), this.yCoords.clone());
     }

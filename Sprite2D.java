@@ -38,17 +38,7 @@ public class Sprite2D extends Shape2D
         }
     }
     
-    @Override
-    public boolean reachedBottom()
-    {
-        return true;
-    }
     
-    @Override
-    public Shape2D clone()
-    {
-        return new Sprite2D (super.getXPos(), super.getYPos(), this.imageFrames);
-    }
     
     
 }
