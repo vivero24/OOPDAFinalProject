@@ -1,5 +1,8 @@
 import java.awt.Graphics;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Write a description of class Polygon2D here.
  *
@@ -124,7 +127,7 @@ public class Polygon2D extends Shape2D
     public boolean reachedBottom()
     {
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
-        return yMax >= 625;
+        return yMax == 625;
     }
     
     public boolean reachedRight()
@@ -163,10 +166,35 @@ public class Polygon2D extends Shape2D
         return new Polygon2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.xCoords.clone(), this.yCoords.clone());
     }
     
-       
+    public boolean touches(Polygon2D block)
+    {
+        boolean touches = false;
+        int matchCount = 0;
+        for (int i = 0; i < this.txCoords.length; i++)
+        {
+            for(int j = 0; j < this.txCoords.length; j++)
+            {
+                if(this.txCoords[i] == block.gettXcoords()[j] && this.tyCoords[i] == block.gettYcoords()[j])
+                {
+                    matchCount ++;
+                }
+            }
+        }
+        
+        if(matchCount > 1)
+        {
+            touches = true;
+        }
+        else
+        {
+            touches = false;
+        }
+        
+        return touches;
+    }
+    }
 
-    
 
-}
+
 
 

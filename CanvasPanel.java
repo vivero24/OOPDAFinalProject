@@ -53,8 +53,6 @@ public class CanvasPanel extends JPanel
         //gridColumns = columns;
         //gridBoxSize = GAME_WIDTH / gridColumns;
         //gridRows = GAME_HEIGHT / gridBoxSize;
-
-        // Create some shapes, they should be in a List
               
         // Callback for keyboard events
         this.setFocusable(true);
@@ -109,8 +107,7 @@ public class CanvasPanel extends JPanel
         int [] iblockYcoords = {-100, -100, 0, 0};
         blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, iblockXcoords, iblockYcoords));
         
-        
-          
+    
         
         this.blockRng = new RandomInteger(0,blocksList.size());
         this.colorRng = new RandomInteger(0, Shape2D.COLORS.length);
@@ -120,6 +117,7 @@ public class CanvasPanel extends JPanel
     public void Simulate()
     {   
             //generate a random number, grab a shape from the list, then move it down
+            
             if(currentBlock == null)
             {
                 int blockRandNum = blockRng.Compute();
@@ -127,38 +125,54 @@ public class CanvasPanel extends JPanel
                 int colorRandNum = colorRng.Compute();
                 currentBlock.setfillColor(colorRandNum);
             
-            } 
-            
-            if(currentBlock.reachedRight())
-            {
-                currentBlock.Move(275 - Arrays.stream(currentBlock.gettXcoords()).max().getAsInt(), 0);
-            }
-            
-            if(currentBlock.reachedLeft())
-            {
-                currentBlock.Move(25 - Arrays.stream(currentBlock.gettXcoords()).min().getAsInt() , 0);
-            }
-        
-            
-            if(currentBlock.reachedBottom()) //checking if shape reaches bottom
-            {
-                currentBlock.Move(0,625 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
-                processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
-                int randnum = blockRng.Compute(); 
-                currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
-                int colorRandNum = colorRng.Compute(); //generate a random color
-                currentBlock.setfillColor(colorRandNum);
-                
             }
             else
             {
                 currentBlock.Move(0,5);
-                
-                
+                if(currentBlock.reachedBottom()) //checking if shape reaches bottom
+                {
+                    currentBlock.Move(0,625 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
+                    processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
+                    int randnum = blockRng.Compute(); 
+                    currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
+                    int colorRandNum = colorRng.Compute(); //generate a random color
+                    currentBlock.setfillColor(colorRandNum);
+                    currentBlock.Move(0,5);
+                }
+                else
+                {
+
+                    for (Polygon2D p : processedBlocks)
+                    {
+                        if(currentBlock.touches(p))
+                        {
+                            processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
+                            int randnum = blockRng.Compute(); 
+                            currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
+                            int colorRandNum = colorRng.Compute(); //generate a random color
+                            currentBlock.setfillColor(colorRandNum);
+                            currentBlock.Move(0,5);
+                        }
+                    }
+                    
+                    
+                }
             }
+            
+        
+        
+        
+            
+            
+                
+                
                 
                    
-        }
+    }
+    
+    
+    
+    
         
 
     // This method is called by renderloop
@@ -193,6 +207,10 @@ public class CanvasPanel extends JPanel
         
         
     }
+    
+    
+    
+    
     
     public void playMusic()
     {
@@ -241,14 +259,31 @@ public class CanvasPanel extends JPanel
                 case KeyEvent.VK_S:
                     System.out.println("pressed 's' key ");
                     currentBlock.Move(0,25);
+                    if(currentBlock.reachedBottom())
+                    {
+                        currentBlock.Move(0,-25);
+                        processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
+                        int randnum = blockRng.Compute(); 
+                        currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
+                        int colorRandNum = colorRng.Compute(); //generate a random color
+                        currentBlock.setfillColor(colorRandNum);
+                    }
                     break;
                 case KeyEvent.VK_A:
                     System.out.println("pressed 'a' key");
                     currentBlock.Move(-25,0);
+                    if(currentBlock.reachedLeft())
+                    {
+                        currentBlock.Move(25,0);
+                    }
                     break;
                 case KeyEvent.VK_D:
                     System.out.println("pressed 'd' key");
                     currentBlock.Move(25,0);
+                    if(currentBlock.reachedRight())
+                    {
+                        currentBlock.Move(-25,0);
+                    }
                     break;
                 case KeyEvent.VK_Q:
                     System.out.println("pressed 'q' key");
