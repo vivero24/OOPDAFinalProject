@@ -75,37 +75,37 @@ public class CanvasPanel extends JPanel
         //t block coords
         int [] tblockXcoords = {75, 150, 150, 125, 125, 100, 100, 75};
         int [] tblockYcoords = {-50, -50, -25, -25,0, 0, -25, -25};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, tblockXcoords, tblockYcoords));
+        blocksList.add(new Tetromino_T(Shape2D.BLACK, 0, 0, tblockXcoords, tblockYcoords));
         
         //s block coords
         int [] sblockXcoords = {100, 150, 150, 125, 125, 75, 75, 100};
         int [] sblockYcoords = {-50, -50, -25, -25, 0, 0, -25, -25};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, sblockXcoords, sblockYcoords));
+        blocksList.add(new Tetromino_S(Shape2D.BLACK, 0, 0, sblockXcoords, sblockYcoords));
         
         //z block coords
         int [] zblockXcoords = {50,100, 100, 125, 125, 75, 75, 50};
         int [] zblockYcoords = {-50, -50, -25, -25, 0, 0, -25, -25};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, zblockXcoords, zblockYcoords));
+        blocksList.add(new Tetromino_Z(Shape2D.BLACK, 0, 0, zblockXcoords, zblockYcoords));
         
         //L block coords
         int [] LblockXcoords = {75, 100, 100, 125, 125, 75};
         int [] LblockYcoords = {-75, -75, -25, -25, 0, 0};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, LblockXcoords, LblockYcoords));
+        blocksList.add(new Tetromino_L(Shape2D.BLACK, 0, 0, LblockXcoords, LblockYcoords));
         
         //j block coords
         int [] jblockXcoords = {100, 125, 125, 75, 75, 100};
         int [] jblockYcoords = {-75, -75, 0, 0, -25, -25};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, jblockXcoords, jblockYcoords));
+        blocksList.add(new Tetromino_J(Shape2D.BLACK, 0, 0, jblockXcoords, jblockYcoords));
         
         //o block coords
         int [] oblockXcoords = {75, 125, 125, 75};
         int [] oblockYcoords = {-50, -50, 0, 0};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, oblockXcoords, oblockYcoords));
+        blocksList.add(new Tetromino_O(Shape2D.BLACK, 0, 0, oblockXcoords, oblockYcoords));
         
         //i block coords
         int [] iblockXcoords = {100, 125, 125, 100};
         int [] iblockYcoords = {-100, -100, 0, 0};
-        blocksList.add(new Polygon2D(Shape2D.BLACK, 0, 0, iblockXcoords, iblockYcoords));
+        blocksList.add(new Tetromino_I(Shape2D.BLACK, 0, 0, iblockXcoords, iblockYcoords));
         
     
         
