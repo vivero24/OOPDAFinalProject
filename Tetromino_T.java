@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public class Tetromino_T extends Polygon2D
 {
-    private List <Rectangle2D> tRectangles;
     
     /**
      * Constructor for objects of class Tetronimo_T
@@ -17,14 +16,14 @@ public class Tetromino_T extends Polygon2D
     public Tetromino_T(int fillColorIndex, int xPos, int yPos, int[] xCoords, int[] yCoords)
     {
         super(fillColorIndex, xPos, yPos,xCoords, yCoords);
-        this.tRectangles = new ArrayList<>();
-        this.tRectangles.add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettYcoords()[0], 75, 25));
-        this.tRectangles.add(new Rectangle2D(super.getFillColorIndex(),  super.gettXcoords()[6], super.gettYcoords()[6], 25, 25));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettYcoords()[0], 75, 25));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(),  super.gettXcoords()[6], super.gettYcoords()[6], 25, 25));
     }
 
-    public List <Rectangle2D> getRectangles()
+    @Override
+    public Polygon2D clone()
     {
-        return this.tRectangles;
+        return new Tetromino_T(super.getFillColorIndex(), super.getXPos(), super.getYPos(), super.getXcoords(), super.getYcoords());
     }
     
 }

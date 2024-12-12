@@ -192,7 +192,15 @@ public class CanvasPanel extends JPanel
     }
     
     
-    
+    public boolean intervalIntersect(int a, int b, int c, int d)
+    {
+        boolean intersect = true;
+        if ((a > d) || (c > b))
+        {
+            intersect = false;
+        }
+        return intersect;
+    }
     
     
     public void playMusic()

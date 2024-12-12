@@ -9,8 +9,6 @@ import java.util.ArrayList;
  */
 public class Tetromino_J extends Polygon2D
 {
-    
-    private List <Rectangle2D> jRectangles;
 
     /**
      * Constructor for objects of class Tetromino_J
@@ -18,10 +16,15 @@ public class Tetromino_J extends Polygon2D
     public Tetromino_J(int fillColorIndex, int xPos, int yPos, int[] xCoords, int[] yCoords)
     {
         super(fillColorIndex, xPos, yPos,xCoords, yCoords);
-        this.jRectangles = new ArrayList<>();
-        jRectangles.add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettYcoords()[0], 25, 75));
-        jRectangles.add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[5], super.gettYcoords()[5], 25, 25));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettYcoords()[0], 25, 75));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[5], super.gettYcoords()[5], 25, 25));
         
+    }
+    
+    @Override
+    public Polygon2D clone()
+    {
+        return new Tetromino_J(super.getFillColorIndex(), super.getXPos(), super.getYPos(), super.getXcoords(), super.getYcoords());
     }
 
     

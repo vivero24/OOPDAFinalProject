@@ -9,17 +9,17 @@ import java.util.ArrayList;
  */
 public class Tetromino_I extends Polygon2D
 {
-    private List <Rectangle2D> iRectangles;
+    
     public Tetromino_I(int fillColorIndex, int xPos, int yPos, int[] xCoords, int[] yCoords)
     {
         super(fillColorIndex, xPos, yPos,xCoords, yCoords);
-        this.iRectangles = new ArrayList<>();
-        iRectangles.add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettXcoords()[0], 25, 100));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettXcoords()[0], 25, 100));
     }
     
-    public List <Rectangle2D> getRectangles()
+    @Override
+    public Polygon2D clone()
     {
-        return iRectangles;
+        return new Tetromino_I(super.getFillColorIndex(), super.getXPos(), super.getYPos(), super.getXcoords(), super.getYcoords());
     }
 
     

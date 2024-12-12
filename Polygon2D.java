@@ -9,14 +9,14 @@ import java.util.ArrayList;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Polygon2D extends Shape2D
+public abstract class Polygon2D extends Shape2D
 {
     private int[] xCoords = null;
     private int[] yCoords = null;
     private int[] txCoords = null;
     private int[] tyCoords = null;
-    
-    
+    private List <Rectangle2D> rectangles;
+        
     
     Polygon2D(int fillColorIndex, int xPos, int yPos, int[] xCoords, int[] yCoords)
     {
@@ -26,6 +26,7 @@ public class Polygon2D extends Shape2D
         this.yCoords = new int[yCoords.length]; // construct (allocate memory)
         this.txCoords = new int[xCoords.length]; // construct (allocate memory)
         this.tyCoords = new int[yCoords.length]; // construct (allocate memory)
+        this.rectangles = new ArrayList<>();
         // Deep Copy
         for (int i = 0; i < xCoords.length; i++)
         {
@@ -79,7 +80,17 @@ public class Polygon2D extends Shape2D
     public void settYcoords(int [] tyCoords)
     {
         this.tyCoords = tyCoords;        
-    }    
+    }
+    
+    public List <Rectangle2D> getRectangles()
+    {
+        return rectangles;
+    }
+    
+    public void setRectangles(List<Rectangle2D> rectangles)
+    {
+        this.rectangles = rectangles;
+    }
     
     
     @Override
@@ -159,10 +170,7 @@ public class Polygon2D extends Shape2D
     }
     
     
-    public Polygon2D clone()
-    {
-        return new Polygon2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.xCoords.clone(), this.yCoords.clone());
-    }
+    public abstract Polygon2D clone();
     
 
     

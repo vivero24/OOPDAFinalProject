@@ -9,19 +9,19 @@ import java.util.ArrayList;
  */
 public class Tetromino_S extends Polygon2D
 {
-    private List <Rectangle2D> sRectangles;
+    
     
     public Tetromino_S(int fillColorIndex, int xPos, int yPos, int[] xCoords, int[] yCoords)
     {
         super(fillColorIndex, xPos, yPos,xCoords, yCoords);
-        this.sRectangles = new ArrayList<>();
-        sRectangles.add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettYcoords()[0], 50, 25));
-        sRectangles.add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[6], super.gettYcoords()[6],50, 25));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[0], super.gettYcoords()[0], 50, 25));
+        super.getRectangles().add(new Rectangle2D(super.getFillColorIndex(), super.gettXcoords()[6], super.gettYcoords()[6],50, 25));
     }
     
-    public List <Rectangle2D> getRectangles()
+    @Override
+    public Polygon2D clone()
     {
-        return sRectangles;
+        return new Tetromino_S(super.getFillColorIndex(), super.getXPos(), super.getYPos(), super.getXcoords(), super.getYcoords());
     }
 
     
