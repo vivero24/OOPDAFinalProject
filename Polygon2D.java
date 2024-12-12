@@ -90,9 +90,7 @@ public class Polygon2D extends Shape2D
         g.fillPolygon(txCoords, tyCoords, xCoords.length);
         
     }
-    
-        
-    
+       
     // This is the Transform method for Polygon2D
     private void Transform()
     {
@@ -166,32 +164,8 @@ public class Polygon2D extends Shape2D
         return new Polygon2D(super.getFillColorIndex(), super.getXPos(), super.getYPos(), this.xCoords.clone(), this.yCoords.clone());
     }
     
-    public boolean touches(Polygon2D block)
-    {
-        boolean touches = false;
-        int matchCount = 0;
-        for (int i = 0; i < this.txCoords.length; i++)
-        {
-            for(int j = 0; j < this.txCoords.length; j++)
-            {
-                if(this.txCoords[i] == block.gettXcoords()[j] && this.tyCoords[i] == block.gettYcoords()[j])
-                {
-                    matchCount ++;
-                }
-            }
-        }
-        
-        if(matchCount > 1)
-        {
-            touches = true;
-        }
-        else
-        {
-            touches = false;
-        }
-        
-        return touches;
-    }
+
+    
     }
 
 

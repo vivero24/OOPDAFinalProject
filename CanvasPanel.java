@@ -139,24 +139,7 @@ public class CanvasPanel extends JPanel
                     currentBlock.setfillColor(colorRandNum);
                     currentBlock.Move(0,5);
                 }
-                else
-                {
-
-                    for (Polygon2D p : processedBlocks)
-                    {
-                        if(currentBlock.touches(p))
-                        {
-                            processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
-                            int randnum = blockRng.Compute(); 
-                            currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
-                            int colorRandNum = colorRng.Compute(); //generate a random color
-                            currentBlock.setfillColor(colorRandNum);
-                            currentBlock.Move(0,5);
-                        }
-                    }
-                    
-                    
-                }
+                
             }
             
         
