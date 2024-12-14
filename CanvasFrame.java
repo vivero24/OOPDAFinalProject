@@ -24,7 +24,7 @@ public class CanvasFrame
         canvas = new CanvasPanel();  // CanvasPanel extends a JPanel
         
         // Use the canvasPanel size & borders to define window size
-        canvas.setPreferredSize(new Dimension(2 * canvas.getCanvasXBorder() + canvas.getCanvasWidth(), 
+        canvas.setPreferredSize(new Dimension(2 * canvas.getCanvasXBorder() + canvas.getCanvasWidth() + 175, 
                                               2 * canvas.getCanvasYBorder() + canvas.getCanvasHeight() ));
         frame.getContentPane().add(canvas); //put the canvas (JPanel) in the frame
 

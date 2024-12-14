@@ -22,18 +22,21 @@ public class CanvasPanel extends JPanel
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
 
-    private final static int CANVAS_WIDTH = 250;
-    private final static int CANVAS_HEIGHT = 600;
+    private final static int GAME_WIDTH = 250;
+    private final static int CANVAS_WIDTH = 450;
+    private final static int CANVAS_HEIGHT = 400;
 
     //ADDED
     private final static int GRID_ROWS = 20;
     private final static int GRID_COLUMNS = 10;
-    private final static int BOX_SIZE = CANVAS_WIDTH / GRID_COLUMNS;
+    public final static int BOX_SIZE = GAME_WIDTH / GRID_COLUMNS;
 
     private List <Polygon2D> blocksList;
     private List <Polygon2D> processedBlocks;
 
     private int frameNumber;
+    private String scoreText = "Score:";
+    private int score = 0;
     private RandomInteger blockRng;
     private RandomInteger colorRng;
     private Polygon2D currentBlock = null;
@@ -124,7 +127,7 @@ public class CanvasPanel extends JPanel
             currentBlock.Move(0,5);
             if(currentBlock.reachedBottom()) //checking if shape reaches bottom
             {
-                currentBlock.Move(0,625 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
+                currentBlock.Move(0,425 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
                 processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
                 int randnum = blockRng.Compute(); 
                 currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
@@ -145,26 +148,35 @@ public class CanvasPanel extends JPanel
 
         // Set window background to black
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,CANVAS_WIDTH + 2 * X_CORNER, CANVAS_HEIGHT + 2 * Y_CORNER); //draw the black border
+        g.fillRect(0,0,GAME_WIDTH + 2 * X_CORNER, CANVAS_HEIGHT + 2 * Y_CORNER); //draw the black border
+
+        // Extend canvas to the right with new width and fill the top and bottom borders
+        g.setColor(Color.BLACK);
+        g.fillRect(X_CORNER + GAME_WIDTH, Y_CORNER - 25, CANVAS_WIDTH - GAME_WIDTH, CANVAS_HEIGHT + 50);
 
         // Set canvas background to grey
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(X_CORNER, Y_CORNER, CANVAS_WIDTH, CANVAS_HEIGHT); //make the canvas white
+        g.fillRect(X_CORNER, Y_CORNER, GAME_WIDTH, CANVAS_HEIGHT); //make the canvas white
 
         // Draw the grid (10 columns x 20 rows)
         g.setColor(Color.DARK_GRAY); // Grid color
-        int cellWidth = CANVAS_WIDTH / 10;  // 10 columns
+        int cellWidth = GAME_WIDTH / 10;  // 10 columns
         int cellHeight = CANVAS_HEIGHT / 20; // 20 rows
 
         //Added temp grid
         for (int i = 0; i <= GRID_ROWS; i++) {
             g.drawLine(X_CORNER, Y_CORNER + i * BOX_SIZE, 
-                X_CORNER + CANVAS_WIDTH, Y_CORNER + i * BOX_SIZE);
+                X_CORNER + GAME_WIDTH, Y_CORNER + i * BOX_SIZE);
         }
         for (int j = 0; j <= GRID_COLUMNS; j++) {
             g.drawLine(X_CORNER + j * BOX_SIZE, Y_CORNER, 
                 X_CORNER + j * BOX_SIZE, Y_CORNER + CANVAS_HEIGHT);
         }
+
+        // Set the font for drawing text
+        g.setFont(new Font("Consolas", Font.PLAIN, 25));
+        g.setColor(Color.WHITE);
+        g.drawString("Score:", 350, 100);
 
         for (Polygon2D p: this.processedBlocks)
         {
@@ -206,7 +218,7 @@ public class CanvasPanel extends JPanel
 
     public static int getCanvasWidth()
     {
-        return CANVAS_WIDTH;
+        return GAME_WIDTH;
     }
 
     public static int getCanvasHeight()
