@@ -90,6 +90,14 @@ public abstract class Polygon2D extends Shape2D
      * @return - int [] txCoords
      */
 
+    
+    /**
+     * gettXcoords - returns transformation x coordinates of polygon
+     * 
+     * @param - none
+     * @return - int [] txCoords
+     */
+
     public int[] gettXcoords()
     {
         return txCoords;
@@ -217,6 +225,12 @@ public abstract class Polygon2D extends Shape2D
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
         return yMax == 425;
     }
+
+    /**
+     * reachedRight - checks if highest x coordinate touches the right wall.
+     * @param - none
+     * @return - boolean
+     */
 
     /**
      * reachedRight - checks if highest x coordinate touches the right wall.

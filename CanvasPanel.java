@@ -3,7 +3,11 @@
  * 
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @author (Enter a name)
+=======
+ * @author (Cristian Vivero, Tymon Muzyk)
+>>>>>>> adec757f5aba010e7d36ca87895f68a47d732f35
 =======
  * @author (Cristian Vivero, Tymon Muzyk)
 >>>>>>> adec757f5aba010e7d36ca87895f68a47d732f35
