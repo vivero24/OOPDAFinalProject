@@ -170,8 +170,7 @@ public abstract class Polygon2D extends Shape2D
         }
         return reachedLeft;
     }
-
+    
     public abstract Polygon2D clone();
-
 }
 
