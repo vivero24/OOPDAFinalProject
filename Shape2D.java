@@ -138,7 +138,7 @@ public abstract class Shape2D
      * @param - int, y position
      * @return - none
      */
-    public void setYPos()
+    public void setYPos(int yPos)
     {
         this.yPos = yPos;
     }

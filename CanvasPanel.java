@@ -2,15 +2,7 @@
  * 2D CanvasPanel
  * 
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
  * @author (Enter a name)
-=======
- * @author (Cristian Vivero, Tymon Muzyk)
->>>>>>> adec757f5aba010e7d36ca87895f68a47d732f35
-=======
- * @author (Cristian Vivero, Tymon Muzyk)
->>>>>>> adec757f5aba010e7d36ca87895f68a47d732f35
  * @version (v1.0 11-17-22)
  */
 import javax.swing.*;
@@ -24,6 +16,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.Timer;
 
 public class CanvasPanel extends JPanel
 {
@@ -65,12 +58,6 @@ public class CanvasPanel extends JPanel
         this.addKeyListener(new myActionListener());
         System.out.println("keyboard event registered");
 
-        // Create a render loop
-        // Create a Swing Timer that will tick 30 times a second
-        // At each tick the ActionListener that was registered via the lambda expression will be invoked
-        playMusic();        
-        Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();}); // lambda expression for ActionListener implements actionPerformed
-        renderLoop.start();
 
         this.blocksList = new ArrayList<>();
         this.processedBlocks = new ArrayList<>();
@@ -116,41 +103,39 @@ public class CanvasPanel extends JPanel
         this.blockRng = new RandomInteger(0,blocksList.size());
         this.colorRng = new RandomInteger(0, Shape2D.COLORS.length);
 
+        this.currentBlock = generateShape();
+        
+        playMusic();
+        Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();});
+        renderLoop.start();
     }
 
     public void Simulate()
     {   
-        //generate a random number, grab a shape from the list, then move it down
+        currentBlock.Move(0,5);
+        boolean collided = false;
 
-        if(currentBlock == null)
+        for(Polygon2D p : processedBlocks)
         {
+            if(currentBlock.collidesWith(p))
+            {
+                collided = true;
+                System.out.println("Collided");
+                break;
+            }
+        }
+
+        if(collided || currentBlock.reachedBottom())
+        {    
+            currentBlock.Move(0,-5);
+            if(currentBlock.reachedBottom())
+            {
+                currentBlock.Move(0,425 - Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
+            }
+            
+            processedBlocks.add(currentBlock);
             generateShape();
         }
-        else
-        {
-            currentBlock.Move(0,5);
-            // Check for collision with other blocks.
-            for (Polygon2D block : processedBlocks) {
-                if (currentBlock.collidesWith(block)) {
-                    // Collision detected.
-                    int adjustY = block.getRectangles().get(0).getYPos() - currentBlock.getRectangles().get(0).getYPos();
-                    currentBlock.Move(0, adjustY); // Adjust block position to prevent sinking through.
-                    processedBlocks.add(currentBlock); // Add the current block to the processed blocks.
-                    generateShape(); // Generate the next falling Tetromino.
-                    return;
-                }
-            }
-            
-            if(currentBlock.reachedBottom()) //checking if shape reaches bottom
-            {
-                currentBlock.Move(0,425 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
-                processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
-                generateShape();
-            }
-            
-
-        }
-
     }
     // This method is called by renderloop
     public void paintComponent(Graphics g)
@@ -196,14 +181,8 @@ public class CanvasPanel extends JPanel
             p.Draw(g);
         }
 
-        if(currentBlock != null )
-        {
-            currentBlock.Draw(g);
-        }
-
+        currentBlock.Draw(g);
     }
-
-
 
     public void playMusic()
     {
@@ -220,14 +199,16 @@ public class CanvasPanel extends JPanel
             musicThread = null;
         }
     }
-    
+
     public Polygon2D generateShape()
     {
-         int blockRandNum = blockRng.Compute();
-         currentBlock = blocksList.get(blockRandNum).clone();
-         int colorRandNum = colorRng.Compute();
-         currentBlock.setfillColor(colorRandNum);
-         return currentBlock;
+        int blockRandNum = blockRng.Compute();
+        currentBlock = blocksList.get(blockRandNum).clone();
+
+        int colorRandNum = colorRng.Compute();
+        currentBlock.setfillColor(colorRandNum);
+
+        return currentBlock;
     }
 
     public static int getCanvasWidth()
@@ -249,8 +230,6 @@ public class CanvasPanel extends JPanel
     {
         return Y_CORNER;
     }
-    
-    
 
     public class myActionListener extends KeyAdapter 
     {
@@ -261,7 +240,7 @@ public class CanvasPanel extends JPanel
                 case KeyEvent.VK_S:
                     System.out.println("pressed 's' key ");
                     currentBlock.Move(0,25);
-                    
+
                     break;
                 case KeyEvent.VK_A:
                     System.out.println("pressed 'a' key");

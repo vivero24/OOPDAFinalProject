@@ -75,7 +75,33 @@ public class Rectangle2D extends Shape2D
         this.width = width;
     }
     
-    
-    
-    
+    public boolean intersects(Rectangle2D r)
+    {
+        int tw = this.width;
+        int th = this.height;
+        
+        int rw = r.getWidth();
+        int rh = r.getHeight();
+        
+        if(rw <=0 || rh <= 0 || tw <= 0 || th <=0)
+        {
+            return false;
+        }
+        int tx = getXPos();
+        int ty = getYPos();
+        
+        int rx = r.getXPos();
+        int ry = r.getYPos();
+        
+        rw += rx;
+        rh += ry;
+        tw += tx;
+        th += ty;
+        
+        return((rw < rx || rw > tx) &&
+               (rh < ry || rh > ty) &&
+               (tw < tx || tw > rx) &&
+               (th < ty || th > ry));
+                
+    }
 }

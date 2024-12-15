@@ -90,7 +90,6 @@ public abstract class Polygon2D extends Shape2D
      * @return - int [] txCoords
      */
 
-    
     /**
      * gettXcoords - returns transformation x coordinates of polygon
      * 
@@ -232,12 +231,6 @@ public abstract class Polygon2D extends Shape2D
      * @return - boolean
      */
 
-    /**
-     * reachedRight - checks if highest x coordinate touches the right wall.
-     * @param - none
-     * @return - boolean
-     */
-
     public boolean reachedRight()
     {
         boolean reachedRight;
@@ -280,21 +273,14 @@ public abstract class Polygon2D extends Shape2D
      */
     public boolean collidesWith(Polygon2D other) //other represents the blocks that are processed
     {
-        for(Rectangle2D r1 : this.rectangles) 
+        for(Rectangle2D rect1 : this.rectangles) 
         {
-            for(Rectangle2D r2 : other.getRectangles())
+            for(Rectangle2D rect2 : other.getRectangles())
             {
-                boolean xIntersect = intervalIntersect(r1.getXPos(), r1.getXPos() + r1.getWidth(),
-                        r2.getXPos(), r2.getXPos() + r2.getWidth());
-
-                boolean yIntersect = intervalIntersect(r1.getYPos(), r1.getYPos() + r1.getHeight(),
-                        r2.getYPos(), r2.getYPos() + r2.getWidth());
-
-                if(xIntersect && yIntersect)
+                if(rect1.intersects(rect2))
                 {
                     return true;
                 }
-
             }
         }
         return false;
@@ -308,6 +294,18 @@ public abstract class Polygon2D extends Shape2D
             intersect = false;
         }
         return intersect;
+    }
+
+    @Override
+    public void Move(int dx, int dy) {
+        // Call the parent class's move method to update polygon's position
+        super.Move(dx, dy); 
+
+        // Update rectangles to match the new polygon position
+        for (Rectangle2D rect : getRectangles()) {
+            rect.setXPos(rect.getXPos() + dx);
+            rect.setYPos(rect.getYPos() + dy);
+        }
     }
 
     /**
