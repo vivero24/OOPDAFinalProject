@@ -170,6 +170,38 @@ public abstract class Polygon2D extends Shape2D
         }
         return reachedLeft;
     }
+    
+    public boolean collidesWith(Polygon2D other) //other represents the blocks that are processed
+    {
+        for(Rectangle2D r1 : this.rectangles) 
+        {
+            for(Rectangle2D r2 : other.getRectangles())
+            {
+                boolean xIntersect = intervalIntersect(r1.getXPos(), r1.getXPos() + r1.getWidth(),
+                r2.getXPos(), r2.getXPos() + r2.getWidth());
+                
+                boolean yIntersect = intervalIntersect(r1.getYPos(), r1.getYPos() + r1.getHeight(),
+                r2.getYPos(), r2.getYPos() + r2.getWidth());
+                
+                if(xIntersect && yIntersect)
+                {
+                    return true;
+                }
+                
+            }
+        }
+        return false;
+    }
+    
+    public boolean intervalIntersect(int a, int b, int c, int d)
+    {
+        boolean intersect = true;
+        if ((a > d) || (c > b))
+        {
+            intersect = false;
+        }
+        return intersect;
+    }
 
     public abstract Polygon2D clone();
 

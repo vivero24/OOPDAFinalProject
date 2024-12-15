@@ -2,7 +2,7 @@
  * 2D CanvasPanel
  * 
  *
- * @author (Prof R)
+ * @author (Cristian Vivero, Tymon Muzyk)
  * @version (v1.0 11-17-22)
  */
 import javax.swing.*;
@@ -116,25 +116,30 @@ public class CanvasPanel extends JPanel
 
         if(currentBlock == null)
         {
-            int blockRandNum = blockRng.Compute();
-            currentBlock = blocksList.get(blockRandNum);
-            int colorRandNum = colorRng.Compute();
-            currentBlock.setfillColor(colorRandNum);
-
+            generateShape();
         }
         else
         {
             currentBlock.Move(0,5);
+            // Check for collision with other blocks.
+            for (Polygon2D block : processedBlocks) {
+                if (currentBlock.collidesWith(block)) {
+                    // Collision detected.
+                    int adjustY = block.getRectangles().get(0).getYPos() - currentBlock.getRectangles().get(0).getYPos();
+                    currentBlock.Move(0, adjustY); // Adjust block position to prevent sinking through.
+                    processedBlocks.add(currentBlock); // Add the current block to the processed blocks.
+                    generateShape(); // Generate the next falling Tetromino.
+                    return;
+                }
+            }
+            
             if(currentBlock.reachedBottom()) //checking if shape reaches bottom
             {
                 currentBlock.Move(0,425 -  Arrays.stream(currentBlock.gettYcoords()).max().getAsInt());
                 processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
-                int randnum = blockRng.Compute(); 
-                currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
-                int colorRandNum = colorRng.Compute(); //generate a random color
-                currentBlock.setfillColor(colorRandNum);
-                currentBlock.Move(0,5);
+                generateShape();
             }
+            
 
         }
 
@@ -183,22 +188,14 @@ public class CanvasPanel extends JPanel
             p.Draw(g);
         }
 
-        if(currentBlock != null)
+        if(currentBlock != null )
         {
             currentBlock.Draw(g);
         }
 
     }
 
-    public boolean intervalIntersect(int a, int b, int c, int d)
-    {
-        boolean intersect = true;
-        if ((a > d) || (c > b))
-        {
-            intersect = false;
-        }
-        return intersect;
-    }
+
 
     public void playMusic()
     {
@@ -214,6 +211,15 @@ public class CanvasPanel extends JPanel
             musicThread.interrupt();
             musicThread = null;
         }
+    }
+    
+    public Polygon2D generateShape()
+    {
+         int blockRandNum = blockRng.Compute();
+         currentBlock = blocksList.get(blockRandNum).clone();
+         int colorRandNum = colorRng.Compute();
+         currentBlock.setfillColor(colorRandNum);
+         return currentBlock;
     }
 
     public static int getCanvasWidth()
@@ -235,6 +241,8 @@ public class CanvasPanel extends JPanel
     {
         return Y_CORNER;
     }
+    
+    
 
     public class myActionListener extends KeyAdapter 
     {
@@ -245,15 +253,7 @@ public class CanvasPanel extends JPanel
                 case KeyEvent.VK_S:
                     System.out.println("pressed 's' key ");
                     currentBlock.Move(0,25);
-                    if(currentBlock.reachedBottom())
-                    {
-                        currentBlock.Move(0,-25);
-                        processedBlocks.add(currentBlock); // allows shapes to stay put at the bottom
-                        int randnum = blockRng.Compute(); 
-                        currentBlock = blocksList.get(randnum).clone(); //pick a new shape and create a seperate instance
-                        int colorRandNum = colorRng.Compute(); //generate a random color
-                        currentBlock.setfillColor(colorRandNum);
-                    }
+                    
                     break;
                 case KeyEvent.VK_A:
                     System.out.println("pressed 'a' key");

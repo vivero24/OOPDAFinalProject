@@ -26,7 +26,25 @@ public class Rectangle2D extends Shape2D
         g.fillRect(this.getXPos(), this.getYPos(), this.width, this.height);
     }
     
+    public int getHeight()
+    {
+        return height;
+    }
     
+    public void setHeight()
+    {
+        this.height = height;
+    }
+    
+    public int getWidth()
+    {
+        return width;
+    }
+    
+    public void setWidth()
+    {
+        this.width = width;
+    }
     
     
 }
