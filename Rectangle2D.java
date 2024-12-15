@@ -19,6 +19,14 @@ public class Rectangle2D extends Shape2D
         this.width = width;
     }
     
+    /**
+     * public void Draw(Graphics g)
+     * 
+     * Render the circle for both filled and outlined according to the states
+     *
+     * @param  - Graphics g is the graphics context
+     * @return - void
+     */
     @Override
     public void Draw(Graphics g)
     {
@@ -26,25 +34,48 @@ public class Rectangle2D extends Shape2D
         g.fillRect(this.getXPos(), this.getYPos(), this.width, this.height);
     }
     
+    /**
+     * getHeight - returns rectangle height
+     * @param - none
+     * @return - int, height
+     */
     public int getHeight()
     {
         return height;
     }
     
-    public void setHeight()
+    /**
+     * setHeight - sets height of rectangle
+     * @param - int height
+     * @return - none
+     */
+    public void setHeight(int height)
     {
         this.height = height;
     }
     
+    /**
+     * getWidth - gets width of rectangle
+     * @param - none
+     * @return - int, width
+     */
     public int getWidth()
     {
         return width;
     }
     
-    public void setWidth()
+    /**
+     * setWidth - sets width of rectangle
+     * 
+     * @param - int width
+     * @return - none
+     */
+    public void setWidth(int width)
     {
         this.width = width;
     }
+    
+    
     
     
 }

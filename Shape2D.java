@@ -98,28 +98,94 @@ public abstract class Shape2D
         this.yPos += yDelta;
     }
     
-    
+    /**
+     * getXPos - returns x position of shape
+     * 
+     * @param - none
+     * @return - int
+     */
     public int getXPos()
     {
         return xPos;
     }
     
+    /**
+     * setXPos - sets x position of shape
+     * 
+     * @param - int, x position
+     * @return - none
+     */
+    public void setXPos(int xPos)
+    {
+        this.xPos = xPos;
+    }
+    
+    /**
+     * getYPos - returns y position of shape
+     * 
+     * @param - none
+     * @return - int
+     *
+     */
     public int getYPos()
     {
         return yPos;
     }
-
+    
+    /**
+     * setYPos - sets y position of shape
+     * 
+     * @param - int, y position
+     * @return - none
+     */
+    public void setYPos()
+    {
+        this.yPos = yPos;
+    }
+    
+    
+    
+    /**
+     *  getFillColorIndex - returns fill color index of shape
+     *  
+     *  @param - none
+     *  @return - int, fillColorIndex
+     */
     public int getFillColorIndex()
     {
         return fillColorIndex;
     }
     
+    /**
+     * setFillColorIndex - sets the fillColorIndex of the shape
+     * 
+     * @param - int, fillColorIndex
+     * @return - none
+     * 
+     */
+    public void setFillColorIndex(int fillColorIndex)
+    {
+        this.fillColorIndex = fillColorIndex;
+    }
+    
+    
+    /**
+     * setfillColor - sets the color of the shape
+     * 
+     * @param - int, fillColorIndex
+     * @return - none
+     */
     public void setfillColor(int fillColorIndex )
     {
         this.fillColor = COLORS[fillColorIndex];
     }
     
-    
+    /**
+     * getFillColor - returns color of shape
+     * 
+     * @param - none
+     * @return - Color, fillColor
+     */
     public Color getFillColor()
     {
         return fillColor;
