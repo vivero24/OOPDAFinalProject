@@ -2,7 +2,11 @@
  * 2D CanvasPanel
  * 
  *
+<<<<<<< HEAD
  * @author (Enter a name)
+=======
+ * @author (Cristian Vivero, Tymon Muzyk)
+>>>>>>> adec757f5aba010e7d36ca87895f68a47d732f35
  * @version (v1.0 11-17-22)
  */
 import javax.swing.*;

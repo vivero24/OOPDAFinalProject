@@ -40,7 +40,7 @@ public abstract class Polygon2D extends Shape2D
             this.tyCoords[i] = yCoords[i] + yPos;
         }
     }
-    
+
     /**
      * getXcoords - returns x coordinates of polygon
      * @param - none
@@ -62,7 +62,6 @@ public abstract class Polygon2D extends Shape2D
         this.xCoords = xCoords;
     }
 
-    
     /**
      * getYcoords - returns y coordinates of polygon
      * @param - none
@@ -73,7 +72,6 @@ public abstract class Polygon2D extends Shape2D
         return yCoords;
     }
 
-    
     /**
      * setYcoords - sets y coordinates of polygon
      * 
@@ -85,19 +83,18 @@ public abstract class Polygon2D extends Shape2D
         this.yCoords = yCoords;        
     }
 
-    
     /**
      * gettXcoords - returns transformation x coordinates of polygon
      * 
      * @param - none
      * @return - int [] txCoords
      */
-    
+
     public int[] gettXcoords()
     {
         return txCoords;
     }
-    
+
     /**
      * settxCoords - sets transformation x coordinates of polygon
      * 
@@ -109,7 +106,6 @@ public abstract class Polygon2D extends Shape2D
         this.txCoords = txCoords;
     }
 
-    
     /**
      * gettYcoords - gets transformation y coordinates of polygon
      * 
@@ -132,7 +128,6 @@ public abstract class Polygon2D extends Shape2D
         this.tyCoords = tyCoords;        
     }
 
-    
     /**
      * getRectangles - returns list of rectangles that make up the polygon
      * 
@@ -144,7 +139,6 @@ public abstract class Polygon2D extends Shape2D
         return rectangles;
     }
 
-    
     /**
      * setRectangles - sets list of rectangles that make up polygon
      * 
@@ -213,7 +207,6 @@ public abstract class Polygon2D extends Shape2D
         }
     }
 
-    
     /**
      * reachedBottom - checks if highest y coordinate of a polygon reaches the y coordinate of the floor
      * @param - none
@@ -224,7 +217,7 @@ public abstract class Polygon2D extends Shape2D
         int yMax = Arrays.stream(tyCoords).max().getAsInt();
         return yMax == 425;
     }
-    
+
     /**
      * reachedRight - checks if highest x coordinate touches the right wall.
      * @param - none
@@ -245,8 +238,7 @@ public abstract class Polygon2D extends Shape2D
         }
         return reachedRight;
     }
-    
-    
+
     /**
      * reachedLeft - checks if highest x coordinate touches the left wall.
      * @param - none
@@ -266,11 +258,12 @@ public abstract class Polygon2D extends Shape2D
         }
         return reachedLeft;
     }
+
     /**
      *  collidesWith - takes a polygon's list of rectangles and compares it with this instance's list of rectangles to see if the two polygons touch/ collide
      *  @param - Polygon2D
      *  @return - boolean
-    */
+     */
     public boolean collidesWith(Polygon2D other) //other represents the blocks that are processed
     {
         for(Rectangle2D r1 : this.rectangles) 
@@ -278,21 +271,21 @@ public abstract class Polygon2D extends Shape2D
             for(Rectangle2D r2 : other.getRectangles())
             {
                 boolean xIntersect = intervalIntersect(r1.getXPos(), r1.getXPos() + r1.getWidth(),
-                r2.getXPos(), r2.getXPos() + r2.getWidth());
-                
+                        r2.getXPos(), r2.getXPos() + r2.getWidth());
+
                 boolean yIntersect = intervalIntersect(r1.getYPos(), r1.getYPos() + r1.getHeight(),
-                r2.getYPos(), r2.getYPos() + r2.getWidth());
-                
+                        r2.getYPos(), r2.getYPos() + r2.getWidth());
+
                 if(xIntersect && yIntersect)
                 {
                     return true;
                 }
-                
+
             }
         }
         return false;
     }
-    
+
     public boolean intervalIntersect(int a, int b, int c, int d)
     {
         boolean intersect = true;
@@ -308,7 +301,6 @@ public abstract class Polygon2D extends Shape2D
      * @param - none
      * @return - Polygon2D
      */
-
     public abstract Polygon2D clone();
 }
 
