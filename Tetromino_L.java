@@ -4,8 +4,8 @@ import java.util.List;
 /**
  * Write a description of class Tetromino_L here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (Cristian Vivero and Tymon Muzyk)
+ * @version (12/16/24)
  */
 public class Tetromino_L extends Polygon2D
 {

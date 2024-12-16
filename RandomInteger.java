@@ -2,8 +2,8 @@
 /**
  * Write a description of class RandomInteger here.
  *
- * @author (Cristian Vivero)
- * @version (a version number or a date)
+ * @author (Cristian Vivero and Tymon Muzyk)
+ * @version (12/16/24)
  */
 public class RandomInteger
 {
@@ -72,8 +72,4 @@ public class RandomInteger
         return randNum;
         
     }
-    
-    
-    
-    
 }

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 /**
  * Write a description of class Polygon2D here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (Cristian Vivero and Tymon Muzyk)
+ * @version (12/16/24)
  */
 
 public abstract class Polygon2D extends Shape2D

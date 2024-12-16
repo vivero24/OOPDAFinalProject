@@ -4,8 +4,8 @@ import java.util.ArrayList;
 /**
  * Write a description of class Tetronimo_Z here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (Cristian Vivero and Tymon Muzyk)
+ * @version (12/16/24)
  */
 public class Tetromino_Z extends Polygon2D
 {

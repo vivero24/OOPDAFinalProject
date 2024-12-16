@@ -1,7 +1,7 @@
 /*
- * Implementation by:
- * @author (Samuel Hopper)
- * @version (v1.0 04-25-24)  Spring'24
+ *
+ * @author (Cristian Vivero and Tymon Muzyk)
+ * @version (12/16/24)
  */
 import javax.sound.sampled.*;
 import java.io.*;

@@ -2,8 +2,8 @@
  * 2D Frame for 2D Graphics
  * 
  *
- * @author (Prof R)
- * @version (v1.0 11-17-22)
+ * @author (Cristian Vivero and Tymon Muzyk)
+ * @version (12/16/24)
  */
 import javax.swing.*;
 import java.awt.*;
