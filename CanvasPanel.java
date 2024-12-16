@@ -148,10 +148,6 @@ public class CanvasPanel extends JPanel
         g.setColor(Color.BLACK);
         g.fillRect(0,0,GAME_WIDTH + 2 * X_CORNER, CANVAS_HEIGHT + 2 * Y_CORNER); //draw the black border
 
-        // Extend canvas to the right with new width and fill the top and bottom borders
-        g.setColor(Color.BLACK);
-        g.fillRect(X_CORNER + GAME_WIDTH, Y_CORNER - 25, CANVAS_WIDTH - GAME_WIDTH, CANVAS_HEIGHT + 50);
-
         // Set canvas background to grey
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(X_CORNER, Y_CORNER, GAME_WIDTH, CANVAS_HEIGHT); //make the canvas white
@@ -171,10 +167,10 @@ public class CanvasPanel extends JPanel
                 X_CORNER + j * BOX_SIZE, Y_CORNER + CANVAS_HEIGHT);
         }
 
-        // Set the font for drawing text
-        g.setFont(new Font("Consolas", Font.PLAIN, 25));
+        // Draw the score on the screen
         g.setColor(Color.WHITE);
-        g.drawString("Score:", 350, 100);
+        g.setFont(new Font("Arial", Font.PLAIN, 24));
+        g.drawString("Score: " + score, 10, 30); // Draw score in top left corner
 
         for (Polygon2D p: this.processedBlocks)
         {
